@@ -35,6 +35,7 @@ for state_data in data:
     for candidate in state_data['results'][0]['candidates']:
         if candidate['candidateId'] == "100008":
             continue
+        print(candidate)
         candidate_name = f"{candidate['first']} {candidate['last']}"
         vote_count = candidate['voteCount']
         vote_pct = candidate['votePct']
