@@ -123,7 +123,7 @@ for state in states:
 
         # Format x-axis to show full UTC timestamp
         plt.gcf().autofmt_xdate()
-        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %H:%M:%S UTC'))
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p EST', tz="EST"))
 
         # Add padding but limit it
         plt.tight_layout(pad=1.5)
