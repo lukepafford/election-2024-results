@@ -2,8 +2,62 @@ import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from datetime import datetime, timedelta
+from datetime import datetime
 import pytz
+
+state_timezones = {
+    "Alabama": "America/Chicago",
+    "Alaska": "America/Anchorage",
+    "Arizona": "America/Phoenix",
+    "Arkansas": "America/Chicago",
+    "California": "America/Los_Angeles",
+    "Colorado": "America/Denver",
+    "Connecticut": "America/New_York",
+    "Delaware": "America/New_York",
+    "District of Columbia": "America/New_York",
+    "Florida": "America/Eastern",
+    "Georgia": "America/Eastern",
+    "Hawaii": "Pacific/Honolulu",
+    "Idaho": "America/Denver",
+    "Illinois": "America/Chicago",
+    "Indiana": "America/Indiana/Indianapolis",  # Note: Indiana has multiple time zones
+    "Iowa": "America/Chicago",
+    "Kansas": "America/Chicago",
+    "Kentucky": "America/Eastern",
+    "Louisiana": "America/Chicago",
+    "Maine": "America/New_York",
+    "Maryland": "America/New_York",
+    "Massachusetts": "America/New_York",
+    "Michigan": "America/Detroit",
+    "Minnesota": "America/Chicago",
+    "Mississippi": "America/Central",
+    "Missouri": "America/Chicago",
+    "Montana": "America/Denver",
+    "Nebraska": "America/Chicago",
+    "Nevada": "America/Los_Angeles",
+    "New Hampshire": "America/New_York",
+    "New Jersey": "America/New_York",
+    "New Mexico": "America/Denver",
+    "New York": "America/New_York",
+    "North Carolina": "America/Eastern",
+    "North Dakota": "America/Central",
+    "Ohio": "America/Eastern",
+    "Oklahoma": "America/Chicago",
+    "Oregon": "America/Los_Angeles",
+    "Pennsylvania": "America/New_York",
+    "Rhode Island": "America/New_York",
+    "South Carolina": "America/Eastern",
+    "South Dakota": "America/Central",
+    "Tennessee": "America/Eastern",
+    "Texas": "America/Chicago",  # Note: Texas has multiple time zones
+    "Utah": "America/Denver",
+    "Vermont": "America/New_York",
+    "Virginia": "America/Eastern",
+    "Washington": "America/Los_Angeles",
+    "West Virginia": "America/Eastern",
+    "Wisconsin": "America/Chicago",
+    "Wyoming": "America/Denver"
+}
 
 # Connect to the SQLite3 database
 conn = sqlite3.connect('election_results.db')
@@ -11,14 +65,6 @@ conn = sqlite3.connect('election_results.db')
 # Fetch data for each state and generate a line graph
 states_query = "SELECT DISTINCT state FROM results"
 states = pd.read_sql_query(states_query, conn)['state'].tolist()
-
-# Dictionary to map states to their respective timezones
-state_timezones = {
-    'Alabama': 'America/Chicago',
-    'Alaska': 'America/Anchorage',
-    'Arizona': 'America/Phoenix',
-    # Add other states and their timezones as needed
-}
 
 for state in states:
     query = '''
@@ -29,9 +75,9 @@ for state in states:
     '''
     df = pd.read_sql_query(query, conn, params=(state,))
     df['timestamp'] = pd.to_datetime(df['timestamp'])
-    
-    # Ensure vote_pct is a float
-    df['vote_pct'] = df['vote_pct'].str.rstrip('%').astype('float') / 100.0
+
+    # Ensure vote_pct is a string, then strip '%' and convert to float
+    df['vote_pct'] = df['vote_pct'].astype(str).str.rstrip('%').astype(float) / 100.0
 
     print(f"State: {state}")
     print(df.head())
@@ -66,20 +112,14 @@ for state in states:
             max_timestamp = df_pivot[candidate].idxmax()
             max_values[candidate] = (max_timestamp, max_value)
 
-        # Add annotations for vote_pct values every hour
-        for timestamp, row in df.iterrows():
-            if row['timestamp'].minute == 0:  # Every hour
-                ax.annotate(f"{row['vote_pct']*100:.1f}%",
-                            (row['timestamp'], row['vote_count']),
-                            textcoords="offset points",
-                            xytext=(0,10),
-                            ha='center',
-                            fontsize=8,
-                            color="green" if row['candidate'] == "Donald Trump" else "purple")
+        # Add vote_pct annotations every hour
+        hourly_df = df.set_index('timestamp').resample('H').first().dropna(subset=['vote_pct'])
+        for timestamp, row in hourly_df.iterrows():
+            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, row['vote_count']), textcoords="offset points", xytext=(0, 10), ha='center')
 
         # Sort candidates by their maximum values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
-        
+
         # Add difference annotation in the top right corner of the plot with color based on leader
         if len(sorted_candidates) >= 2:
             highest = sorted_candidates[0][1][1]
@@ -116,20 +156,15 @@ for state in states:
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
 
-        # Adjust timezone for the state
-        timezone = state_timezones.get(state, 'UTC')
-        tz = pytz.timezone(timezone)
-        df_pivot.index = df_pivot.index.tz_convert(tz)
-        
         # Format x-axis to show full timestamp in the state's timezone
-        plt.gcf().autofmt_xdate()
-        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p', tz=tz))
+        state_tz = pytz.timezone(state_timezones.get(state, 'UTC'))
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p', tz=state_tz))
 
         # Add padding but limit it
         plt.tight_layout(pad=1.5)
 
         # Save the plot with reasonable DPI
-        plt.savefig(f'images2/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
+        plt.savefig(f'images/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
         plt.close()
 
 # Close the database connection
