@@ -9,156 +9,156 @@ Simply runs data.py every minute to create a SQLite DB, followed by line_graphs.
 
 
 ### Alabama
-![Alabama](./Alabama_vote_counts.png)
+![Alabama](./images/Alabama_vote_counts.png)
 
 ### Alaska
-![Alaska](./Alaska_vote_counts.png)
+![Alaska](./images/Alaska_vote_counts.png)
 
 ### Arizona
-![Arizona](./Arizona_vote_counts.png)
+![Arizona](./images/Arizona_vote_counts.png)
 
 ### Arkansas
-![Arkansas](./Arkansas_vote_counts.png)
+![Arkansas](./images/Arkansas_vote_counts.png)
 
 ### California
-![California](./California_vote_counts.png)
+![California](./images/California_vote_counts.png)
 
 ### Colorado
-![Colorado](./Colorado_vote_counts.png)
+![Colorado](./images/Colorado_vote_counts.png)
 
 ### Connecticut
-![Connecticut](./Connecticut_vote_counts.png)
+![Connecticut](./images/Connecticut_vote_counts.png)
 
 ### Delaware
-![Delaware](./Delaware_vote_counts.png)
+![Delaware](./images/Delaware_vote_counts.png)
 
 ### District of Columbia
-![District of Columbia](./District of Columbia_vote_counts.png)
+![District of Columbia](./images/District of Columbia_vote_counts.png)
 
 ### Florida
-![Florida](./Florida_vote_counts.png)
+![Florida](./images/Florida_vote_counts.png)
 
 ### Georgia
-![Georgia](./Georgia_vote_counts.png)
+![Georgia](./images/Georgia_vote_counts.png)
 
 ### Hawaii
-![Hawaii](./Hawaii_vote_counts.png)
+![Hawaii](./images/Hawaii_vote_counts.png)
 
 ### Idaho
-![Idaho](./Idaho_vote_counts.png)
+![Idaho](./images/Idaho_vote_counts.png)
 
 ### Illinois
-![Illinois](./Illinois_vote_counts.png)
+![Illinois](./images/Illinois_vote_counts.png)
 
 ### Indiana
-![Indiana](./Indiana_vote_counts.png)
+![Indiana](./images/Indiana_vote_counts.png)
 
 ### Iowa
-![Iowa](./Iowa_vote_counts.png)
+![Iowa](./images/Iowa_vote_counts.png)
 
 ### Kansas
-![Kansas](./Kansas_vote_counts.png)
+![Kansas](./images/Kansas_vote_counts.png)
 
 ### Kentucky
-![Kentucky](./Kentucky_vote_counts.png)
+![Kentucky](./images/Kentucky_vote_counts.png)
 
 ### Louisiana
-![Louisiana](./Louisiana_vote_counts.png)
+![Louisiana](./images/Louisiana_vote_counts.png)
 
 ### Maine
-![Maine](./Maine_vote_counts.png)
+![Maine](./images/Maine_vote_counts.png)
 
 ### Maryland
-![Maryland](./Maryland_vote_counts.png)
+![Maryland](./images/Maryland_vote_counts.png)
 
 ### Massachusetts
-![Massachusetts](./Massachusetts_vote_counts.png)
+![Massachusetts](./images/Massachusetts_vote_counts.png)
 
 ### Michigan
-![Michigan](./Michigan_vote_counts.png)
+![Michigan](./images/Michigan_vote_counts.png)
 
 ### Minnesota
-![Minnesota](./Minnesota_vote_counts.png)
+![Minnesota](./images/Minnesota_vote_counts.png)
 
 ### Mississippi
-![Mississippi](./Mississippi_vote_counts.png)
+![Mississippi](./images/Mississippi_vote_counts.png)
 
 ### Missouri
-![Missouri](./Missouri_vote_counts.png)
+![Missouri](./images/Missouri_vote_counts.png)
 
 ### Montana
-![Montana](./Montana_vote_counts.png)
+![Montana](./images/Montana_vote_counts.png)
 
 ### Nebraska
-![Nebraska](./Nebraska_vote_counts.png)
+![Nebraska](./images/Nebraska_vote_counts.png)
 
 ### Nevada
-![Nevada](./Nevada_vote_counts.png)
+![Nevada](./images/Nevada_vote_counts.png)
 
 ### New Hampshire
-![New Hampshire](./New Hampshire_vote_counts.png)
+![New Hampshire](./images/New Hampshire_vote_counts.png)
 
 ### New Jersey
-![New Jersey](./New Jersey_vote_counts.png)
+![New Jersey](./images/New Jersey_vote_counts.png)
 
 ### New Mexico
-![New Mexico](./New Mexico_vote_counts.png)
+![New Mexico](./images/New Mexico_vote_counts.png)
 
 ### New York
-![New York](./New York_vote_counts.png)
+![New York](./images/New York_vote_counts.png)
 
 ### North Carolina
-![North Carolina](./North Carolina_vote_counts.png)
+![North Carolina](./images/North Carolina_vote_counts.png)
 
 ### North Dakota
-![North Dakota](./North Dakota_vote_counts.png)
+![North Dakota](./images/North Dakota_vote_counts.png)
 
 ### Ohio
-![Ohio](./Ohio_vote_counts.png)
+![Ohio](./images/Ohio_vote_counts.png)
 
 ### Oklahoma
-![Oklahoma](./Oklahoma_vote_counts.png)
+![Oklahoma](./images/Oklahoma_vote_counts.png)
 
 ### Oregon
-![Oregon](./Oregon_vote_counts.png)
+![Oregon](./images/Oregon_vote_counts.png)
 
 ### Pennsylvania
-![Pennsylvania](./Pennsylvania_vote_counts.png)
+![Pennsylvania](./images/Pennsylvania_vote_counts.png)
 
 ### Rhode Island
-![Rhode Island](./Rhode Island_vote_counts.png)
+![Rhode Island](./images/Rhode Island_vote_counts.png)
 
 ### South Carolina
-![South Carolina](./South Carolina_vote_counts.png)
+![South Carolina](./images/South Carolina_vote_counts.png)
 
 ### South Dakota
-![South Dakota](./South Dakota_vote_counts.png)
+![South Dakota](./images/South Dakota_vote_counts.png)
 
 ### Tennessee
-![Tennessee](./Tennessee_vote_counts.png)
+![Tennessee](./images/Tennessee_vote_counts.png)
 
 ### Texas
-![Texas](./Texas_vote_counts.png)
+![Texas](./images/Texas_vote_counts.png)
 
 ### Utah
-![Utah](./Utah_vote_counts.png)
+![Utah](./images/Utah_vote_counts.png)
 
 ### Vermont
-![Vermont](./Vermont_vote_counts.png)
+![Vermont](./images/Vermont_vote_counts.png)
 
 ### Virginia
-![Virginia](./Virginia_vote_counts.png)
+![Virginia](./images/Virginia_vote_counts.png)
 
 ### Washington
-![Washington](./Washington_vote_counts.png)
+![Washington](./images/Washington_vote_counts.png)
 
 ### West Virginia
-![West Virginia](./West Virginia_vote_counts.png)
+![West Virginia](./images/West Virginia_vote_counts.png)
 
 ### Wisconsin
-![Wisconsin](./Wisconsin_vote_counts.png)
+![Wisconsin](./images/Wisconsin_vote_counts.png)
 
 ### Wyoming
-![Wyoming](./Wyoming_vote_counts.png)
+![Wyoming](./images/Wyoming_vote_counts.png)
 
 
