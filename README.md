@@ -20,12 +20,6 @@ Let me add proper Markdown table formatting:
 | [Tennessee](#tennessee) | [Texas](#texas) | [Utah](#utah) | [Vermont](#vermont) | [Virginia](#virginia) | [Washington](#washington) | [West Virginia](#west-virginia) |
 | [Wisconsin](#wisconsin) | [Wyoming](#wyoming) | | | | | |
 
-Now it has:
-1. A header row
-2. A separator row with hyphens
-3. Proper cell alignment using pipes at the start and end of each row
-
-This should render correctly on GitHub now.
 
 
 ### Alabama
