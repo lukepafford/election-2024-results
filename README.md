@@ -21,7 +21,7 @@ Information is downloaded every minute from the same source as Axios (the data t
 
 
 ### Alabama
-<img src="./images/Alabama_vote_counts.svg" width="100%" height="100%">
+<img src="./images/Alabama_vote_counts.svg" width="100%" height="200%">
 
 ### Alaska
 <img src="./images/Alaska_vote_counts.svg" width="100%" height="100%">
