@@ -5,6 +5,7 @@ import seaborn as sns
 from datetime import datetime
 import pytz
 
+# Dictionary mapping states to their time zones
 state_timezones = {
     "Alabama": "America/Chicago",
     "Alaska": "America/Anchorage",
@@ -20,7 +21,7 @@ state_timezones = {
     "Hawaii": "Pacific/Honolulu",
     "Idaho": "America/Denver",
     "Illinois": "America/Chicago",
-    "Indiana": "America/Indiana/Indianapolis",  # Note: Indiana has multiple time zones
+    "Indiana": "America/Indiana/Indianapolis",
     "Iowa": "America/Chicago",
     "Kansas": "America/Chicago",
     "Kentucky": "US/Eastern",
@@ -49,14 +50,14 @@ state_timezones = {
     "South Carolina": "US/Eastern",
     "South Dakota": "US/Central",
     "Tennessee": "US/Eastern",
-    "Texas": "America/Chicago",  # Note: Texas has multiple time zones
+    "Texas": "America/Chicago",
     "Utah": "America/Denver",
     "Vermont": "America/New_York",
     "Virginia": "US/Eastern",
     "Washington": "America/Los_Angeles",
     "West Virginia": "US/Eastern",
     "Wisconsin": "America/Chicago",
-    "Wyoming": "America/Denver"
+    "Wyoming": "America/Denver",
 }
 
 # Connect to the SQLite3 database
@@ -115,7 +116,15 @@ for state in states:
         # Add vote_pct annotations every hour
         hourly_df = df.set_index('timestamp').resample('H').first().dropna(subset=['vote_pct'])
         for timestamp, row in hourly_df.iterrows():
-            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, row['vote_count']), textcoords="offset points", xytext=(0, 10), ha='center')
+            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, row['vote_count']),
+                        textcoords="offset points", xytext=(0, 10), ha='center')
+
+        # Align annotations along the same width
+        annotation_x = ax.get_xlim()[1]  # Get the rightmost x-coordinate of the plot
+        for timestamp, row in hourly_df.iterrows():
+            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, row['vote_count']),
+                        xytext=(annotation_x, row['vote_count']),
+                        textcoords="data", ha='right')
 
         # Sort candidates by their maximum values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
@@ -148,7 +157,7 @@ for state in states:
         # Other style customizations
         plt.grid(alpha=0.7)
         plt.xticks(rotation=45)
-        plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
+        plt.title(f'Vote Counts Over Time - {state} ({state_timezones[state].split("/")[-1]})', fontsize=14, fontweight='bold')
         plt.xlabel('Timestamp', fontsize=12)
         plt.ylabel('Vote Count', fontsize=12)
         plt.legend(loc='upper left', fontsize=10)
@@ -164,7 +173,7 @@ for state in states:
         plt.tight_layout(pad=1.5)
 
         # Save the plot with reasonable DPI
-        plt.savefig(f'images2/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
+        plt.savefig(f'images2/{state}_vote_counts.png', dpi=150, bbox_inches='tight', pad_inches=0.5)
         plt.close()
 
 # Close the database connection
