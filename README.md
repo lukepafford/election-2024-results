@@ -45,7 +45,7 @@ Information is downloaded every minute from the same source as Axios (the data t
 ![Delaware](./images/Delaware_vote_counts.svg)
 
 ### District of Columbia
-![District of Columbia](<./images/District of Columbia_vote_counts.svg)
+![District of Columbia](<./images/District of Columbia_vote_counts.svg>)
 
 ### Florida
 ![Florida](./images/Florida_vote_counts.svg)
@@ -108,22 +108,22 @@ Information is downloaded every minute from the same source as Axios (the data t
 ![Nevada](./images/Nevada_vote_counts.svg)
 
 ### New Hampshire
-![New Hampshire](<./images/New Hampshire_vote_counts.svg)
+![New Hampshire](<./images/New Hampshire_vote_counts.svg>)
 
 ### New Jersey
-![New Jersey](<./images/New Jersey_vote_counts.svg)
+![New Jersey](<./images/New Jersey_vote_counts.svg>)
 
 ### New Mexico
-![New Mexico](<./images/New Mexico_vote_counts.svg)
+![New Mexico](<./images/New Mexico_vote_counts.svg>)
 
 ### New York
-![New York](<./images/New York_vote_counts.svg)
+![New York](<./images/New York_vote_counts.svg>)
 
 ### North Carolina
-![North Carolina](<./images/North Carolina_vote_counts.svg)
+![North Carolina](<./images/North Carolina_vote_counts.svg>)
 
 ### North Dakota
-![North Dakota](<./images/North Dakota_vote_counts.svg)
+![North Dakota](<./images/North Dakota_vote_counts.svg>)
 
 ### Ohio
 ![Ohio](./images/Ohio_vote_counts.svg)
@@ -138,13 +138,13 @@ Information is downloaded every minute from the same source as Axios (the data t
 ![Pennsylvania](./images/Pennsylvania_vote_counts.svg)
 
 ### Rhode Island
-![Rhode Island](<./images/Rhode Island_vote_counts.svg)
+![Rhode Island](<./images/Rhode Island_vote_counts.svg>)
 
 ### South Carolina
-![South Carolina](<./images/South Carolina_vote_counts.svg)
+![South Carolina](<./images/South Carolina_vote_counts.svg>)
 
 ### South Dakota
-![South Dakota](<./images/South Dakota_vote_counts.svg)
+![South Dakota](<./images/South Dakota_vote_counts.svg>)
 
 ### Tennessee
 ![Tennessee](./images/Tennessee_vote_counts.svg)
@@ -165,7 +165,7 @@ Information is downloaded every minute from the same source as Axios (the data t
 ![Washington](./images/Washington_vote_counts.svg)
 
 ### West Virginia
-![West Virginia](<./images/West Virginia_vote_counts.svg)
+![West Virginia](<./images/West Virginia_vote_counts.svg>)
 
 ### Wisconsin
 ![Wisconsin](./images/Wisconsin_vote_counts.svg)
