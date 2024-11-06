@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Connect to the SQLite3 database
 conn = sqlite3.connect('election_results.db')
@@ -41,53 +41,37 @@ for state in states:
         plt.figure(figsize=(12, 8))
         ax = plt.gca()
 
-        # Dictionary to store maximum values for each candidate
+        # Dictionary to store maximum values and corresponding timestamps for each candidate
         max_values = {}
+        timestamp_99_8 = {}
 
         # First plot all lines
         for candidate in df_pivot.columns:
             color = "red" if candidate == "Donald Trump" else "blue"
             ax.plot(df_pivot.index, df_pivot[candidate], label=candidate, color=color)
 
-            # Store maximum values
+            # Store maximum values and calculate 99.8% of the maximum
             max_value = df_pivot[candidate].max()
+            threshold_value = 0.998 * max_value
             max_timestamp = df_pivot[candidate].idxmax()
             max_values[candidate] = (max_timestamp, max_value)
+            
+            # Find the timestamp where the vote count first reaches 99.8% of the maximum value
+            timestamp_99_8[candidate] = df_pivot[df_pivot[candidate] >= threshold_value].index[0]
+
+        # Determine the X-axis limits
+        non_zero_start = df_pivot[(df_pivot != 0).any(axis=1)].index[0]
+        x_min = non_zero_start - timedelta(hours=2)
+        
+        overall_max_timestamp_99_8 = max(timestamp_99_8.values())
+        x_max = overall_max_timestamp_99_8 + timedelta(hours=3)
+        
+        ax.set_xlim([x_min, x_max])
 
         # Sort candidates by their maximum values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
 
-        # Ensure plot has enough height for annotations
-        max_value_overall = max(v[1] for _, v in max_values.items())
-        ax.set_ylim(0, max_value_overall * 1.15)  # Add 15% padding at top
-
-        # Add annotations with smart positioning
-        for i, (candidate, (max_timestamp, max_value)) in enumerate(sorted_candidates):
-            # Default to right-side annotation
-            ha = 'left'
-            horiz_offset = 10
-            vert_offset = max_value_overall * 0.02 * (i + 1)  # Scale offset with data
-
-            # Only calculate position if we have multiple timestamps
-            if len(df_pivot.index) > 1:
-                time_position = (max_timestamp - df_pivot.index[0]).total_seconds()
-                total_time = (df_pivot.index[-1] - df_pivot.index[0]).total_seconds()
-
-                if total_time > 0 and time_position / total_time > 0.5:
-                    # Point is in right half - place annotation to the left
-                    ha = 'right'
-                    horiz_offset = -10
-
-            color = "r" if candidate == "Donald Trump" else "b"
-            ax.annotate(f'↑ {int(max_value):,}',
-                         xy=(max_timestamp, max_value),
-                         xytext=(horiz_offset, 5),
-                         textcoords='offset points',
-                         color=color,
-                         ha=ha,
-                         va='bottom')
-
-        # Add difference annotation in the top right corner of the plot with color based on leader
+        # Difference annotation in the top right corner of the plot with color based on leader
         if len(sorted_candidates) >= 2:
             highest = sorted_candidates[0][1][1]
             second_highest = sorted_candidates[1][1][1]
@@ -136,3 +120,4 @@ for state in states:
 
 # Close the database connection
 conn.close()
+
