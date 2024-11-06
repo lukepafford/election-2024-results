@@ -78,10 +78,12 @@ for state in states:
                     ha = 'right'
                     horiz_offset = -10
 
+            color = "r" if candidate == "Donald Trump" else "b"
             ax.annotate(f'↑ {int(max_value):,}',
                          xy=(max_timestamp, max_value),
                          xytext=(horiz_offset, 5),
                          textcoords='offset points',
+                         color=color,
                          ha=ha,
                          va='bottom')
 
