@@ -75,11 +75,11 @@ for state in states:
             # Set color based on who's leading
             face_color = "r" if leader == "Donald Trump" else "b"
 
-            # Position difference annotation within plot bounds
+            # Position difference annotation outside the plot bounds to the right
             ax.annotate(f'Difference: {int(diff):,}',
-                        xy=(0.98, 0.95),
+                        xy=(1.05, 0.95),
                         xycoords='axes fraction',
-                        ha='right',
+                        ha='left',
                         va='top',
                         bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
 
