@@ -43,35 +43,29 @@ for state in states:
 
         # Dictionary to store maximum values and corresponding timestamps for each candidate
         max_values = {}
-        timestamp_99_8 = {}
 
         # First plot all lines
         for candidate in df_pivot.columns:
             color = "red" if candidate == "Donald Trump" else "blue"
             ax.plot(df_pivot.index, df_pivot[candidate], label=candidate, color=color)
 
-            # Store maximum values and calculate 99.8% of the maximum
+            # Store maximum values
             max_value = df_pivot[candidate].max()
-            threshold_value = 0.998 * max_value
             max_timestamp = df_pivot[candidate].idxmax()
             max_values[candidate] = (max_timestamp, max_value)
-            
-            # Find the timestamp where the vote count first reaches 99.8% of the maximum value
-            timestamp_99_8[candidate] = df_pivot[df_pivot[candidate] >= threshold_value].index[0]
 
-        # Determine the X-axis limits
-        non_zero_start = df_pivot[(df_pivot != 0).any(axis=1)].index[0]
-        x_min = non_zero_start - timedelta(hours=2)
-        
-        overall_max_timestamp_99_8 = max(timestamp_99_8.values())
-        x_max = overall_max_timestamp_99_8 + timedelta(hours=3)
-        
-        ax.set_xlim([x_min, x_max])
+            # Annotate the maximum value on the plot
+            ax.annotate(f'{max_value:,}', 
+                        xy=(max_timestamp, max_value), 
+                        xytext=(5, 5), 
+                        textcoords='offset points', 
+                        color=color, 
+                        fontsize=10, 
+                        fontweight='bold',
+                        bbox=dict(facecolor='white', alpha=0.7))
 
-        # Sort candidates by their maximum values
+        # Calculate the difference between the max values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
-
-        # Difference annotation in the top right corner of the plot with color based on leader
         if len(sorted_candidates) >= 2:
             highest = sorted_candidates[0][1][1]
             second_highest = sorted_candidates[1][1][1]
@@ -83,26 +77,19 @@ for state in states:
 
             # Position difference annotation within plot bounds
             ax.annotate(f'Difference: {int(diff):,}',
-                         xy=(0.98, 0.95),
-                         xycoords='axes fraction',
-                         ha='right',
-                         va='top',
-                         bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
+                        xy=(0.98, 0.95),
+                        xycoords='axes fraction',
+                        ha='right',
+                        va='top',
+                        bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
 
         # Use Seaborn to style the plot
         sns.set_style("whitegrid")
         sns.despine(left=True, bottom=True)
 
-        # Set color palette (customize as needed)
-        sns.set_palette("husl", n_colors=len(df_pivot.columns))
-
         # Other style customizations
         plt.grid(alpha=0.7)
         plt.xticks(rotation=45)
-        plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
-        plt.xlabel('Timestamp (EST)', fontsize=12)
-        plt.ylabel('Vote Count', fontsize=12)
-        plt.legend(loc='upper left', fontsize=10)
 
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
@@ -115,6 +102,10 @@ for state in states:
         plt.tight_layout(pad=1.5)
 
         # Save the plot with reasonable DPI
+        plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
+        plt.xlabel('Timestamp (EST)', fontsize=12)
+        plt.ylabel('Vote Count', fontsize=12)
+        plt.legend(loc='upper left', fontsize=10)
         plt.savefig(f'images/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
         plt.close()
 
