@@ -92,10 +92,7 @@ for state in states:
             diff = highest - second_highest
             
             # Set color based on who's leading
-            diff_color = "red" if leader == "Donald Trump" else "blue"
-            rgb = (255, 0, 0) if leader == "Donald Trump" else (0, 0, 255)
-
-
+            face_color = "r" if leader == "Donald Trump" else "b"
             
             # Position difference annotation within plot bounds
             ax.annotate(f'Difference: {int(diff):,}',
@@ -104,7 +101,8 @@ for state in states:
                        ha='right',
                        va='top',
                        # color=diff_color,
-                       bbox=dict(boxstyle='round,pad=0.5', fc=rgb, alpha=0.5))
+                       # bbox=dict(boxstyle='round,pad=0.5', fc=rgb, alpha=0.5))
+                       bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
 
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
