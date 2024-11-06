@@ -21,156 +21,156 @@ Information is downloaded every minute from the same source as Axios (the data t
 
 
 ### Alabama
-![Alabama](./images/Alabama_vote_counts.svg)
+<img src="./images/Alabama_vote_counts.svg" width="100%" height="100%">
 
 ### Alaska
-![Alaska](./images/Alaska_vote_counts.svg)
+<img src="./images/Alaska_vote_counts.svg" width="100%" height="100%">
 
 ### Arizona
-![Arizona](./images/Arizona_vote_counts.svg)
+<img src="./images/Arizona_vote_counts.svg" width="100%" height="100%">
 
 ### Arkansas
-![Arkansas](./images/Arkansas_vote_counts.svg)
+<img src="./images/Arkansas_vote_counts.svg" width="100%" height="100%">
 
 ### California
-![California](./images/California_vote_counts.svg)
+<img src="./images/California_vote_counts.svg" width="100%" height="100%">
 
 ### Colorado
-![Colorado](./images/Colorado_vote_counts.svg)
+<img src="./images/Colorado_vote_counts.svg" width="100%" height="100%">
 
 ### Connecticut
-![Connecticut](./images/Connecticut_vote_counts.svg)
+<img src="./images/Connecticut_vote_counts.svg" width="100%" height="100%">
 
 ### Delaware
-![Delaware](./images/Delaware_vote_counts.svg)
+<img src="./images/Delaware_vote_counts.svg" width="100%" height="100%">
 
 ### District of Columbia
-![District of Columbia](<./images/District of Columbia_vote_counts.svg>)
+<img src="./images/District of Columbia_vote_counts.svg" width="100%" height="100%">
 
 ### Florida
-![Florida](./images/Florida_vote_counts.svg)
+<img src="./images/Florida_vote_counts.svg" width="100%" height="100%">
 
 ### Georgia
-![Georgia](./images/Georgia_vote_counts.svg)
+<img src="./images/Georgia_vote_counts.svg" width="100%" height="100%">
 
 ### Hawaii
-![Hawaii](./images/Hawaii_vote_counts.svg)
+<img src="./images/Hawaii_vote_counts.svg" width="100%" height="100%">
 
 ### Idaho
-![Idaho](./images/Idaho_vote_counts.svg)
+<img src="./images/Idaho_vote_counts.svg" width="100%" height="100%">
 
 ### Illinois
-![Illinois](./images/Illinois_vote_counts.svg)
+<img src="./images/Illinois_vote_counts.svg" width="100%" height="100%">
 
 ### Indiana
-![Indiana](./images/Indiana_vote_counts.svg)
+<img src="./images/Indiana_vote_counts.svg" width="100%" height="100%">
 
 ### Iowa
-![Iowa](./images/Iowa_vote_counts.svg)
+<img src="./images/Iowa_vote_counts.svg" width="100%" height="100%">
 
 ### Kansas
-![Kansas](./images/Kansas_vote_counts.svg)
+<img src="./images/Kansas_vote_counts.svg" width="100%" height="100%">
 
 ### Kentucky
-![Kentucky](./images/Kentucky_vote_counts.svg)
+<img src="./images/Kentucky_vote_counts.svg" width="100%" height="100%">
 
 ### Louisiana
-![Louisiana](./images/Louisiana_vote_counts.svg)
+<img src="./images/Louisiana_vote_counts.svg" width="100%" height="100%">
 
 ### Maine
-![Maine](./images/Maine_vote_counts.svg)
+<img src="./images/Maine_vote_counts.svg" width="100%" height="100%">
 
 ### Maryland
-![Maryland](./images/Maryland_vote_counts.svg)
+<img src="./images/Maryland_vote_counts.svg" width="100%" height="100%">
 
 ### Massachusetts
-![Massachusetts](./images/Massachusetts_vote_counts.svg)
+<img src="./images/Massachusetts_vote_counts.svg" width="100%" height="100%">
 
 ### Michigan
-![Michigan](./images/Michigan_vote_counts.svg)
+<img src="./images/Michigan_vote_counts.svg" width="100%" height="100%">
 
 ### Minnesota
-![Minnesota](./images/Minnesota_vote_counts.svg)
+<img src="./images/Minnesota_vote_counts.svg" width="100%" height="100%">
 
 ### Mississippi
-![Mississippi](./images/Mississippi_vote_counts.svg)
+<img src="./images/Mississippi_vote_counts.svg" width="100%" height="100%">
 
 ### Missouri
-![Missouri](./images/Missouri_vote_counts.svg)
+<img src="./images/Missouri_vote_counts.svg" width="100%" height="100%">
 
 ### Montana
-![Montana](./images/Montana_vote_counts.svg)
+<img src="./images/Montana_vote_counts.svg" width="100%" height="100%">
 
 ### Nebraska
-![Nebraska](./images/Nebraska_vote_counts.svg)
+<img src="./images/Nebraska_vote_counts.svg" width="100%" height="100%">
 
 ### Nevada
-![Nevada](./images/Nevada_vote_counts.svg)
+<img src="./images/Nevada_vote_counts.svg" width="100%" height="100%">
 
 ### New Hampshire
-![New Hampshire](<./images/New Hampshire_vote_counts.svg>)
+<img src="./images/New Hampshire_vote_counts.svg" width="100%" height="100%">
 
 ### New Jersey
-![New Jersey](<./images/New Jersey_vote_counts.svg>)
+<img src="./images/New Jersey_vote_counts.svg" width="100%" height="100%">
 
 ### New Mexico
-![New Mexico](<./images/New Mexico_vote_counts.svg>)
+<img src="./images/New Mexico_vote_counts.svg" width="100%" height="100%">
 
 ### New York
-![New York](<./images/New York_vote_counts.svg>)
+<img src="./images/New York_vote_counts.svg" width="100%" height="100%">
 
 ### North Carolina
-![North Carolina](<./images/North Carolina_vote_counts.svg>)
+<img src="./images/North Carolina_vote_counts.svg" width="100%" height="100%">
 
 ### North Dakota
-![North Dakota](<./images/North Dakota_vote_counts.svg>)
+<img src="./images/North Dakota_vote_counts.svg" width="100%" height="100%">
 
 ### Ohio
-![Ohio](./images/Ohio_vote_counts.svg)
+<img src="./images/Ohio_vote_counts.svg" width="100%" height="100%">
 
 ### Oklahoma
-![Oklahoma](./images/Oklahoma_vote_counts.svg)
+<img src="./images/Oklahoma_vote_counts.svg" width="100%" height="100%">
 
 ### Oregon
-![Oregon](./images/Oregon_vote_counts.svg)
+<img src="./images/Oregon_vote_counts.svg" width="100%" height="100%">
 
 ### Pennsylvania
-![Pennsylvania](./images/Pennsylvania_vote_counts.svg)
+<img src="./images/Pennsylvania_vote_counts.svg" width="100%" height="100%">
 
 ### Rhode Island
-![Rhode Island](<./images/Rhode Island_vote_counts.svg>)
+<img src="./images/Rhode Island_vote_counts.svg" width="100%" height="100%">
 
 ### South Carolina
-![South Carolina](<./images/South Carolina_vote_counts.svg>)
+<img src="./images/South Carolina_vote_counts.svg" width="100%" height="100%">
 
 ### South Dakota
-![South Dakota](<./images/South Dakota_vote_counts.svg>)
+<img src="./images/South Dakota_vote_counts.svg" width="100%" height="100%">
 
 ### Tennessee
-![Tennessee](./images/Tennessee_vote_counts.svg)
+<img src="./images/Tennessee_vote_counts.svg" width="100%" height="100%">
 
 ### Texas
-![Texas](./images/Texas_vote_counts.svg)
+<img src="./images/Texas_vote_counts.svg" width="100%" height="100%">
 
 ### Utah
-![Utah](./images/Utah_vote_counts.svg)
+<img src="./images/Utah_vote_counts.svg" width="100%" height="100%">
 
 ### Vermont
-![Vermont](./images/Vermont_vote_counts.svg)
+<img src="./images/Vermont_vote_counts.svg" width="100%" height="100%">
 
 ### Virginia
-![Virginia](./images/Virginia_vote_counts.svg)
+<img src="./images/Virginia_vote_counts.svg" width="100%" height="100%">
 
 ### Washington
-![Washington](./images/Washington_vote_counts.svg)
+<img src="./images/Washington_vote_counts.svg" width="100%" height="100%">
 
 ### West Virginia
-![West Virginia](<./images/West Virginia_vote_counts.svg>)
+<img src="./images/West Virginia_vote_counts.svg" width="100%" height="100%">
 
 ### Wisconsin
-![Wisconsin](./images/Wisconsin_vote_counts.svg)
+<img src="./images/Wisconsin_vote_counts.svg" width="100%" height="100%">
 
 ### Wyoming
-![Wyoming](./images/Wyoming_vote_counts.svg)
+<img src="./images/Wyoming_vote_counts.svg" width="100%" height="100%">
 
 
