@@ -84,11 +84,18 @@ for state in states:
                        ha=ha,
                        va='bottom')
 
-        # Add difference annotation in the top right corner of the plot
+        # Add difference annotation in the top right corner of the plot with color based on leader
         if len(sorted_candidates) >= 2:
             highest = sorted_candidates[0][1][1]
             second_highest = sorted_candidates[1][1][1]
+            leader = sorted_candidates[0][0]  # Name of candidate with highest count
             diff = highest - second_highest
+            
+            # Set color based on who's leading
+            diff_color = "red" if leader == "Donald Trump" else "blue"
+            rgb = (255, 0, 0) if leader == "Donald Trump" else (0, 0, 255)
+
+
             
             # Position difference annotation within plot bounds
             ax.annotate(f'Difference: {int(diff):,}',
@@ -96,7 +103,8 @@ for state in states:
                        xycoords='axes fraction',
                        ha='right',
                        va='top',
-                       bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5))
+                       # color=diff_color,
+                       bbox=dict(boxstyle='round,pad=0.5', fc=rgb, alpha=0.5))
 
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
