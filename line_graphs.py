@@ -129,7 +129,7 @@ for state in states:
         plt.tight_layout(pad=1.5)
 
         # Save the plot with reasonable DPI
-        plt.savefig(f'images/{state}_vote_counts.png', dpi=150, bbox_inches='tight', pad_inches=0.5)
+        plt.savefig(f'images/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
         plt.close()
 
 # Close the database connection
