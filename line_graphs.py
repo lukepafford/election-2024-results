@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from datetime import datetime
 
 # Connect to the SQLite3 database
@@ -39,15 +40,15 @@ for state in states:
         # Create figure and axis objects with fixed size
         plt.figure(figsize=(12, 8))
         ax = plt.gca()
-        
+
         # Dictionary to store maximum values for each candidate
         max_values = {}
-        
+
         # First plot all lines
         for candidate in df_pivot.columns:
             color = "red" if candidate == "Donald Trump" else "blue"
             ax.plot(df_pivot.index, df_pivot[candidate], label=candidate, color=color)
-            
+
             # Store maximum values
             max_value = df_pivot[candidate].max()
             max_timestamp = df_pivot[candidate].idxmax()
@@ -55,34 +56,34 @@ for state in states:
 
         # Sort candidates by their maximum values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
-        
+
         # Ensure plot has enough height for annotations
         max_value_overall = max(v[1] for _, v in max_values.items())
         ax.set_ylim(0, max_value_overall * 1.15)  # Add 15% padding at top
-        
+
         # Add annotations with smart positioning
         for i, (candidate, (max_timestamp, max_value)) in enumerate(sorted_candidates):
             # Default to right-side annotation
             ha = 'left'
             horiz_offset = 10
             vert_offset = max_value_overall * 0.02 * (i + 1)  # Scale offset with data
-            
+
             # Only calculate position if we have multiple timestamps
             if len(df_pivot.index) > 1:
                 time_position = (max_timestamp - df_pivot.index[0]).total_seconds()
                 total_time = (df_pivot.index[-1] - df_pivot.index[0]).total_seconds()
-                
+
                 if total_time > 0 and time_position / total_time > 0.5:
                     # Point is in right half - place annotation to the left
                     ha = 'right'
                     horiz_offset = -10
-            
+
             ax.annotate(f'↑ {int(max_value):,}',
-                       xy=(max_timestamp, max_value),
-                       xytext=(horiz_offset, 5),
-                       textcoords='offset points',
-                       ha=ha,
-                       va='bottom')
+                         xy=(max_timestamp, max_value),
+                         xytext=(horiz_offset, 5),
+                         textcoords='offset points',
+                         ha=ha,
+                         va='bottom')
 
         # Add difference annotation in the top right corner of the plot with color based on leader
         if len(sorted_candidates) >= 2:
@@ -90,35 +91,43 @@ for state in states:
             second_highest = sorted_candidates[1][1][1]
             leader = sorted_candidates[0][0]  # Name of candidate with highest count
             diff = highest - second_highest
-            
+
             # Set color based on who's leading
             face_color = "r" if leader == "Donald Trump" else "b"
-            
+
             # Position difference annotation within plot bounds
             ax.annotate(f'Difference: {int(diff):,}',
-                       xy=(0.98, 0.95),
-                       xycoords='axes fraction',
-                       ha='right',
-                       va='top',
-                       # color=diff_color,
-                       # bbox=dict(boxstyle='round,pad=0.5', fc=rgb, alpha=0.5))
-                       bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
+                         xy=(0.98, 0.95),
+                         xycoords='axes fraction',
+                         ha='right',
+                         va='top',
+                         bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
+
+        # Use Seaborn to style the plot
+        sns.set_style("whitegrid")
+        sns.despine(left=True, bottom=True)
+
+        # Set color palette (customize as needed)
+        sns.set_palette("husl", n_colors=len(df_pivot.columns))
+
+        # Other style customizations
+        plt.grid(alpha=0.7)
+        plt.xticks(rotation=45)
+        plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
+        plt.xlabel('Timestamp (UTC)', fontsize=12)
+        plt.ylabel('Vote Count', fontsize=12)
+        plt.legend(loc='upper left', fontsize=10)
 
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
-        
-        plt.title(f'Vote Counts Over Time - {state}')
-        plt.xlabel('Timestamp (UTC)')
-        plt.ylabel('Vote Count')
-        legend = plt.legend(loc='upper left')
-        
+
         # Format x-axis to show full UTC timestamp
         plt.gcf().autofmt_xdate()
         ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %H:%M:%S UTC'))
-        
+
         # Add padding but limit it
         plt.tight_layout(pad=1.5)
-        
+
         # Save the plot with reasonable DPI
         plt.savefig(f'images/{state}_vote_counts.png', dpi=150, bbox_inches='tight', pad_inches=0.5)
         plt.close()
