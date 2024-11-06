@@ -7,6 +7,10 @@ Information is downloaded every minute from the same source as Axios (the data t
 
 ## Results
 
+Let me add proper Markdown table formatting:
+
+| _ | _| _| _ | _| _| _|
+|----------|----------|----------|----------|----------|----------|----------|
 | [Alabama](#alabama) | [Alaska](#alaska) | [Arizona](#arizona) | [Arkansas](#arkansas) | [California](#california) | [Colorado](#colorado) | [Connecticut](#connecticut) |
 | [Delaware](#delaware) | [District of Columbia](#district-of-columbia) | [Florida](#florida) | [Georgia](#georgia) | [Hawaii](#hawaii) | [Idaho](#idaho) | [Illinois](#illinois) |
 | [Indiana](#indiana) | [Iowa](#iowa) | [Kansas](#kansas) | [Kentucky](#kentucky) | [Louisiana](#louisiana) | [Maine](#maine) | [Maryland](#maryland) |
@@ -15,6 +19,13 @@ Information is downloaded every minute from the same source as Axios (the data t
 | [Ohio](#ohio) | [Oklahoma](#oklahoma) | [Oregon](#oregon) | [Pennsylvania](#pennsylvania) | [Rhode Island](#rhode-island) | [South Carolina](#south-carolina) | [South Dakota](#south-dakota) |
 | [Tennessee](#tennessee) | [Texas](#texas) | [Utah](#utah) | [Vermont](#vermont) | [Virginia](#virginia) | [Washington](#washington) | [West Virginia](#west-virginia) |
 | [Wisconsin](#wisconsin) | [Wyoming](#wyoming) | | | | | |
+
+Now it has:
+1. A header row
+2. A separator row with hyphens
+3. Proper cell alignment using pipes at the start and end of each row
+
+This should render correctly on GitHub now.
 
 
 ### Alabama
