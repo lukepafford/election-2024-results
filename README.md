@@ -7,8 +7,6 @@ Information is downloaded every minute from the same source as Axios (the data t
 
 ## Results
 
-Let me add proper Markdown table formatting:
-
 | _ | _| _| _ | _| _| _|
 |----------|----------|----------|----------|----------|----------|----------|
 | [Alabama](#alabama) | [Alaska](#alaska) | [Arizona](#arizona) | [Arkansas](#arkansas) | [California](#california) | [Colorado](#colorado) | [Connecticut](#connecticut) |
