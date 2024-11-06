@@ -15,22 +15,22 @@ state_timezones = {
     "Connecticut": "America/New_York",
     "Delaware": "America/New_York",
     "District of Columbia": "America/New_York",
-    "Florida": "America/Eastern",
-    "Georgia": "America/Eastern",
+    "Florida": "US/Eastern",
+    "Georgia": "US/Eastern",
     "Hawaii": "Pacific/Honolulu",
     "Idaho": "America/Denver",
     "Illinois": "America/Chicago",
     "Indiana": "America/Indiana/Indianapolis",  # Note: Indiana has multiple time zones
     "Iowa": "America/Chicago",
     "Kansas": "America/Chicago",
-    "Kentucky": "America/Eastern",
+    "Kentucky": "US/Eastern",
     "Louisiana": "America/Chicago",
     "Maine": "America/New_York",
     "Maryland": "America/New_York",
     "Massachusetts": "America/New_York",
     "Michigan": "America/Detroit",
     "Minnesota": "America/Chicago",
-    "Mississippi": "America/Central",
+    "Mississippi": "US/Central",
     "Missouri": "America/Chicago",
     "Montana": "America/Denver",
     "Nebraska": "America/Chicago",
@@ -39,22 +39,22 @@ state_timezones = {
     "New Jersey": "America/New_York",
     "New Mexico": "America/Denver",
     "New York": "America/New_York",
-    "North Carolina": "America/Eastern",
-    "North Dakota": "America/Central",
-    "Ohio": "America/Eastern",
+    "North Carolina": "US/Eastern",
+    "North Dakota": "US/Central",
+    "Ohio": "US/Eastern",
     "Oklahoma": "America/Chicago",
     "Oregon": "America/Los_Angeles",
     "Pennsylvania": "America/New_York",
     "Rhode Island": "America/New_York",
-    "South Carolina": "America/Eastern",
-    "South Dakota": "America/Central",
-    "Tennessee": "America/Eastern",
+    "South Carolina": "US/Eastern",
+    "South Dakota": "US/Central",
+    "Tennessee": "US/Eastern",
     "Texas": "America/Chicago",  # Note: Texas has multiple time zones
     "Utah": "America/Denver",
     "Vermont": "America/New_York",
-    "Virginia": "America/Eastern",
+    "Virginia": "US/Eastern",
     "Washington": "America/Los_Angeles",
-    "West Virginia": "America/Eastern",
+    "West Virginia": "US/Eastern",
     "Wisconsin": "America/Chicago",
     "Wyoming": "America/Denver"
 }
@@ -164,7 +164,7 @@ for state in states:
         plt.tight_layout(pad=1.5)
 
         # Save the plot with reasonable DPI
-        plt.savefig(f'images/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
+        plt.savefig(f'images2/{state}_vote_counts.svg', dpi=150, bbox_inches='tight', pad_inches=0.5)
         plt.close()
 
 # Close the database connection
