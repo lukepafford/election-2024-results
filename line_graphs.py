@@ -52,7 +52,7 @@ for state in states:
         plt.tight_layout()
 
         # Save the plot
-        plt.savefig(f'{state}_vote_counts.png')
+        plt.savefig(f'images/{state}_vote_counts.png')
         plt.close()
 
 # Close the database connection
