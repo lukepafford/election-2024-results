@@ -3,62 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
-import pytz
-
-# Dictionary mapping states to their time zones
-state_timezones = {
-    "Alabama": "America/Chicago",
-    "Alaska": "America/Anchorage",
-    "Arizona": "America/Phoenix",
-    "Arkansas": "America/Chicago",
-    "California": "America/Los_Angeles",
-    "Colorado": "America/Denver",
-    "Connecticut": "America/New_York",
-    "Delaware": "America/New_York",
-    "District of Columbia": "America/New_York",
-    "Florida": "US/Eastern",
-    "Georgia": "US/Eastern",
-    "Hawaii": "Pacific/Honolulu",
-    "Idaho": "America/Denver",
-    "Illinois": "America/Chicago",
-    "Indiana": "America/Indiana/Indianapolis",
-    "Iowa": "America/Chicago",
-    "Kansas": "America/Chicago",
-    "Kentucky": "US/Eastern",
-    "Louisiana": "America/Chicago",
-    "Maine": "America/New_York",
-    "Maryland": "America/New_York",
-    "Massachusetts": "America/New_York",
-    "Michigan": "America/Detroit",
-    "Minnesota": "America/Chicago",
-    "Mississippi": "US/Central",
-    "Missouri": "America/Chicago",
-    "Montana": "America/Denver",
-    "Nebraska": "America/Chicago",
-    "Nevada": "America/Los_Angeles",
-    "New Hampshire": "America/New_York",
-    "New Jersey": "America/New_York",
-    "New Mexico": "America/Denver",
-    "New York": "America/New_York",
-    "North Carolina": "US/Eastern",
-    "North Dakota": "US/Central",
-    "Ohio": "US/Eastern",
-    "Oklahoma": "America/Chicago",
-    "Oregon": "America/Los_Angeles",
-    "Pennsylvania": "America/New_York",
-    "Rhode Island": "America/New_York",
-    "South Carolina": "US/Eastern",
-    "South Dakota": "US/Central",
-    "Tennessee": "US/Eastern",
-    "Texas": "America/Chicago",
-    "Utah": "America/Denver",
-    "Vermont": "America/New_York",
-    "Virginia": "US/Eastern",
-    "Washington": "America/Los_Angeles",
-    "West Virginia": "US/Eastern",
-    "Wisconsin": "America/Chicago",
-    "Wyoming": "America/Denver",
-}
 
 # Connect to the SQLite3 database
 conn = sqlite3.connect('election_results.db')
@@ -115,16 +59,15 @@ for state in states:
 
         # Add vote_pct annotations every hour
         hourly_df = df.set_index('timestamp').resample('H').first().dropna(subset=['vote_pct'])
+        annotation_y = ax.get_ylim()[0] + (ax.get_ylim()[1] - ax.get_ylim()[0]) * 0.1  # 1/10th from the bottom
         for timestamp, row in hourly_df.iterrows():
-            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, row['vote_count']),
-                        textcoords="offset points", xytext=(0, 10), ha='center')
+            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, annotation_y),
+                        textcoords="offset points", xytext=(0, 0), ha='center', color='green')
 
-        # Align annotations along the same width
-        annotation_x = ax.get_xlim()[1]  # Get the rightmost x-coordinate of the plot
-        for timestamp, row in hourly_df.iterrows():
-            ax.annotate(f"{row['vote_pct']:.2%}", xy=(timestamp, row['vote_count']),
-                        xytext=(annotation_x, row['vote_count']),
-                        textcoords="data", ha='right')
+        # Add the "Percent Vote Counted" annotation
+        percent_vote_counted_y = ax.get_ylim()[0] + (ax.get_ylim()[1] - ax.get_ylim()[0]) * 0.2  # 2/10ths from the bottom
+        ax.annotate('Percent Vote Counted', xy=(hourly_df.index[0], percent_vote_counted_y),
+                    xytext=(-10, 0), textcoords='offset points', ha='right', color='green')
 
         # Sort candidates by their maximum values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
@@ -157,17 +100,17 @@ for state in states:
         # Other style customizations
         plt.grid(alpha=0.7)
         plt.xticks(rotation=45)
-        plt.title(f'Vote Counts Over Time - {state} ({state_timezones[state].split("/")[-1]})', fontsize=14, fontweight='bold')
-        plt.xlabel('Timestamp', fontsize=12)
+        plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
+        plt.xlabel('Timestamp (EST)', fontsize=12)
         plt.ylabel('Vote Count', fontsize=12)
         plt.legend(loc='upper left', fontsize=10)
 
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
 
-        # Format x-axis to show full timestamp in the state's timezone
-        state_tz = pytz.timezone(state_timezones.get(state, 'UTC'))
-        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p', tz=state_tz))
+        # Format x-axis to show full UTC timestamp
+        plt.gcf().autofmt_xdate()
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p EST', tz="EST"))
 
         # Add padding but limit it
         plt.tight_layout(pad=1.5)
