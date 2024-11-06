@@ -2,7 +2,8 @@ import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
 
 # Connect to the SQLite3 database
 conn = sqlite3.connect('election_results.db')
@@ -11,15 +12,26 @@ conn = sqlite3.connect('election_results.db')
 states_query = "SELECT DISTINCT state FROM results"
 states = pd.read_sql_query(states_query, conn)['state'].tolist()
 
+# Dictionary to map states to their respective timezones
+state_timezones = {
+    'Alabama': 'America/Chicago',
+    'Alaska': 'America/Anchorage',
+    'Arizona': 'America/Phoenix',
+    # Add other states and their timezones as needed
+}
+
 for state in states:
     query = '''
-        SELECT timestamp, candidate, vote_count
+        SELECT timestamp, candidate, vote_count, vote_pct
         FROM results
         WHERE state = ?
         ORDER BY timestamp
     '''
     df = pd.read_sql_query(query, conn, params=(state,))
     df['timestamp'] = pd.to_datetime(df['timestamp'])
+    
+    # Ensure vote_pct is a float
+    df['vote_pct'] = df['vote_pct'].str.rstrip('%').astype('float') / 100.0
 
     print(f"State: {state}")
     print(df.head())
@@ -54,37 +66,20 @@ for state in states:
             max_timestamp = df_pivot[candidate].idxmax()
             max_values[candidate] = (max_timestamp, max_value)
 
+        # Add annotations for vote_pct values every hour
+        for timestamp, row in df.iterrows():
+            if row['timestamp'].minute == 0:  # Every hour
+                ax.annotate(f"{row['vote_pct']*100:.1f}%",
+                            (row['timestamp'], row['vote_count']),
+                            textcoords="offset points",
+                            xytext=(0,10),
+                            ha='center',
+                            fontsize=8,
+                            color="green" if row['candidate'] == "Donald Trump" else "purple")
+
         # Sort candidates by their maximum values
         sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
-
-        # Ensure plot has enough height for annotations
-        max_value_overall = max(v[1] for _, v in max_values.items())
-        ax.set_ylim(0, max_value_overall * 1.15)  # Add 15% padding at top
-
-        # Add annotations with smart positioning
-        for i, (candidate, (max_timestamp, max_value)) in enumerate(sorted_candidates):
-            # Default to right-side annotation
-            ha = 'left'
-            horiz_offset = 10
-            vert_offset = max_value_overall * 0.02 * (i + 1)  # Scale offset with data
-
-            # Only calculate position if we have multiple timestamps
-            if len(df_pivot.index) > 1:
-                time_position = (max_timestamp - df_pivot.index[0]).total_seconds()
-                total_time = (df_pivot.index[-1] - df_pivot.index[0]).total_seconds()
-
-                if total_time > 0 and time_position / total_time > 0.5:
-                    # Point is in right half - place annotation to the left
-                    ha = 'right'
-                    horiz_offset = -10
-
-            ax.annotate(f'↑ {int(max_value):,}',
-                         xy=(max_timestamp, max_value),
-                         xytext=(horiz_offset, 5),
-                         textcoords='offset points',
-                         ha=ha,
-                         va='bottom')
-
+        
         # Add difference annotation in the top right corner of the plot with color based on leader
         if len(sorted_candidates) >= 2:
             highest = sorted_candidates[0][1][1]
@@ -114,16 +109,21 @@ for state in states:
         plt.grid(alpha=0.7)
         plt.xticks(rotation=45)
         plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
-        plt.xlabel('Timestamp (EST)', fontsize=12)
+        plt.xlabel('Timestamp', fontsize=12)
         plt.ylabel('Vote Count', fontsize=12)
         plt.legend(loc='upper left', fontsize=10)
 
         # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
 
-        # Format x-axis to show full UTC timestamp
+        # Adjust timezone for the state
+        timezone = state_timezones.get(state, 'UTC')
+        tz = pytz.timezone(timezone)
+        df_pivot.index = df_pivot.index.tz_convert(tz)
+        
+        # Format x-axis to show full timestamp in the state's timezone
         plt.gcf().autofmt_xdate()
-        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p EST', tz="EST"))
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p', tz=tz))
 
         # Add padding but limit it
         plt.tight_layout(pad=1.5)
@@ -134,3 +134,4 @@ for state in states:
 
 # Close the database connection
 conn.close()
+
