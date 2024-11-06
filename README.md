@@ -1,4 +1,4 @@
-# election-2024-results
+# 2024 Election Results
 Line graphs of all states for the 2024 election.
 
 Simply runs [data.py](./data.py) every minute to create a SQLite DB, followed by [line_graphs.py](./line_graphs.py) every 5 minutes to update images.
