@@ -114,7 +114,7 @@ for state in states:
         plt.grid(alpha=0.7)
         plt.xticks(rotation=45)
         plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
-        plt.xlabel('Timestamp (UTC)', fontsize=12)
+        plt.xlabel('Timestamp (EST)', fontsize=12)
         plt.ylabel('Vote Count', fontsize=12)
         plt.legend(loc='upper left', fontsize=10)
 
