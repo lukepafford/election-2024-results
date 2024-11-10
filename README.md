@@ -3,13 +3,15 @@ Line graphs of all states for the 2024 election.
 
 Simply runs [data.py](./data.py) every minute to create a SQLite DB, followed by [line_graphs.py](./line_graphs.py) every 5 minutes to update images.
 
-Information is downloaded every minute from the same source as Axios (the data that feeds into https://www.axios.com/visuals/election-results-2024-live-updates-map).
+Information is downloaded from the same source as the [Axios 2024 election results map](https://www.axios.com/visuals/election-results-2024-live-updates-map). They simply hosted the data at https://s3.amazonaws.com/graphics.axios.com/elex-results-2024/live/2024-11-05/results-president-state-latest.json.
 
 ## Summary
 
+<img src="./images/electoral_votes.svg">
+
 <img src="./images/total_counts.svg">
 
-## Results
+## Results by State
 
 | _ | _| _| _ | _| _| _|
 |----------|----------|----------|----------|----------|----------|----------|
