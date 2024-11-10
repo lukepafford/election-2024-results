@@ -5,6 +5,10 @@ Simply runs [data.py](./data.py) every minute to create a SQLite DB, followed by
 
 Information is downloaded every minute from the same source as Axios (the data that feeds into https://www.axios.com/visuals/election-results-2024-live-updates-map).
 
+## Summary
+
+<img src="./images/total_counts.svg">
+
 ## Results
 
 | _ | _| _| _ | _| _| _|
