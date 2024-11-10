@@ -2,18 +2,18 @@ import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from datetime import datetime, timedelta
 
 # Connect to the SQLite3 database
 conn = sqlite3.connect('election_results.db')
 
-# Fetch data for each state and generate a line graph
+
+# Rest of the script for line graphs remains the same
 states_query = "SELECT DISTINCT state FROM results"
 states = pd.read_sql_query(states_query, conn)['state'].tolist()
 
 for state in states:
     query = '''
-        SELECT timestamp, candidate, vote_count
+        SELECT timestamp, candidate, vote_count, vote_pct
         FROM results
         WHERE state = ?
         ORDER BY timestamp
@@ -21,87 +21,95 @@ for state in states:
     df = pd.read_sql_query(query, conn, params=(state,))
     df['timestamp'] = pd.to_datetime(df['timestamp'])
 
-    print(f"State: {state}")
-    print(df.head())
-
     # Filter to include only "Donald Trump" and "Kamala Harris"
-    df = df[df['candidate'].isin(['Donald Trump', 'Kamala Harris'])]
+    main_candidates_df = df[df['candidate'].isin(['Donald Trump', 'Kamala Harris'])]
 
-    # Pivot the data to have candidates as columns
-    df_pivot = df.pivot(index='timestamp', columns='candidate', values='vote_count')
+    # Pivot the data to have candidates as columns for both vote counts and percentages
+    votes_pivot = main_candidates_df.pivot(index='timestamp', 
+                                         columns='candidate', 
+                                         values='vote_count')
+    pct_pivot = main_candidates_df.pivot(index='timestamp', 
+                                       columns='candidate', 
+                                       values='vote_pct')
 
-    # Remove columns with all NaN values
-    df_pivot = df_pivot.dropna(axis=1, how='all')
+    # Calculate "Other" percentage (100 - sum of main candidates)
+    other_pct = 100 - pct_pivot.sum(axis=1)
+    
+    # Calculate "Other" vote count based on percentage
+    total_votes = votes_pivot.sum(axis=1)
+    other_votes = (other_pct * total_votes / 100)
 
-    if not df_pivot.empty:
-        print(f"Generating plot for {state} with data:")
-        print(df_pivot.head())
+    # Add "Other" to the vote counts
+    votes_pivot['Other'] = other_votes
 
-        # Create figure and axis objects with fixed size
+    if not votes_pivot.empty:
         plt.figure(figsize=(12, 8))
         ax = plt.gca()
 
         # Dictionary to store maximum values and corresponding timestamps for each candidate
         max_values = {}
 
-        # First plot all lines
-        for candidate in df_pivot.columns:
-            color = "red" if candidate == "Donald Trump" else "blue"
-            ax.plot(df_pivot.index, df_pivot[candidate], label=candidate, color=color)
+        # Plot lines for each candidate
+        for candidate in votes_pivot.columns:
+            color = {"Donald Trump": "red", 
+                    "Kamala Harris": "blue", 
+                    "Other": "grey"}[candidate]
+            
+            ax.plot(votes_pivot.index, 
+                   votes_pivot[candidate], 
+                   label=candidate, 
+                   color=color,
+                   linestyle='-' if candidate != 'Other' else '--')
 
-            # Store maximum values
-            max_value = df_pivot[candidate].max()
-            max_timestamp = df_pivot[candidate].idxmax()
+            # Store and annotate maximum values
+            max_value = votes_pivot[candidate].max()
+            max_timestamp = votes_pivot[candidate].idxmax()
             max_values[candidate] = (max_timestamp, max_value)
 
             # Annotate the maximum value on the plot
-            ax.annotate(f'{max_value:,}', 
-                        xy=(max_timestamp, max_value), 
-                        xytext=(5, 5), 
-                        textcoords='offset points', 
-                        color=color, 
-                        fontsize=10, 
-                        fontweight='bold',
-                        bbox=dict(facecolor='white', alpha=0.7))
+            ax.annotate(f'{int(max_value):,}', 
+                       xy=(max_timestamp, max_value), 
+                       xytext=(5, 5), 
+                       textcoords='offset points', 
+                       color=color, 
+                       fontsize=10, 
+                       fontweight='bold',
+                       bbox=dict(facecolor='white', alpha=0.7))
 
-        # Calculate the difference between the max values
-        sorted_candidates = sorted(max_values.items(), key=lambda x: x[1][1], reverse=True)
+        # Calculate and annotate the difference between top two main candidates
+        main_candidates = ['Donald Trump', 'Kamala Harris']
+        main_max_values = {k: v for k, v in max_values.items() if k in main_candidates}
+        sorted_candidates = sorted(main_max_values.items(), key=lambda x: x[1][1], reverse=True)
+        
         if len(sorted_candidates) >= 2:
             highest = sorted_candidates[0][1][1]
             second_highest = sorted_candidates[1][1][1]
-            leader = sorted_candidates[0][0]  # Name of candidate with highest count
+            leader = sorted_candidates[0][0]
             diff = highest - second_highest
 
-            # Set color based on who's leading
             face_color = "r" if leader == "Donald Trump" else "b"
-
-            # Position difference annotation outside the plot bounds to the right
+            
             ax.annotate(f'Difference: {int(diff):,}',
-                        xy=(1.05, 0.95),
-                        xycoords='axes fraction',
-                        ha='left',
-                        va='top',
-                        bbox=dict(boxstyle='round,pad=0.5', facecolor=face_color, alpha=0.5))
+                       xy=(1.05, 0.95),
+                       xycoords='axes fraction',
+                       ha='left',
+                       va='top',
+                       bbox=dict(boxstyle='round,pad=0.5', 
+                                facecolor=face_color, 
+                                alpha=0.5))
 
-        # Use Seaborn to style the plot
+        # Style customizations
         sns.set_style("whitegrid")
         sns.despine(left=True, bottom=True)
-
-        # Other style customizations
         plt.grid(alpha=0.7)
         plt.xticks(rotation=45)
-
-        # Explicitly set linear scale for y-axis
         ax.set_yscale('linear')
-
-        # Format x-axis to show full UTC timestamp
         plt.gcf().autofmt_xdate()
         ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %I:%M %p EST', tz="EST"))
 
-        # Add padding but limit it
         plt.tight_layout(pad=1.5)
 
-        # Save the plot with reasonable DPI
+        # Save the plot
         plt.title(f'Vote Counts Over Time - {state}', fontsize=14, fontweight='bold')
         plt.xlabel('Timestamp (EST)', fontsize=12)
         plt.ylabel('Vote Count', fontsize=12)
@@ -111,4 +119,3 @@ for state in states:
 
 # Close the database connection
 conn.close()
-
